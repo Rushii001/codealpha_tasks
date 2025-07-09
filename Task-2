@@ -1,0 +1,33 @@
+stock_prices = {
+    "AAPL": 180,
+    "TSLA": 250,
+    "GOOGL": 140,
+    "MSFT": 330
+}
+
+investment_data = {}
+while True:
+    stock = input("Enter stock symbol (or 'done' to finish): ").upper()
+    if stock == "DONE":
+        break
+    if stock in stock_prices:
+        qty = int(input(f"Enter quantity for {stock}: "))
+        investment_data[stock] = qty
+    else:
+        print(f"{stock} not found in price list!")
+
+total_value = 0
+for stock, qty in investment_data.items():
+    total_value += stock_prices[stock] * qty
+
+print(f"\nTotal Investment: ₹{total_value}")
+save = input("Do you want to save the result to a file? (yes/no): ").lower()
+if save == "yes":
+    with open("investment_result.txt", "w") as file:
+        file.write("Stock\tQuantity\tPrice\tTotal\n")
+        for stock, qty in investment_data.items():
+            price = stock_prices[stock]
+            total = price * qty
+            file.write(f"{stock}\t{qty}\t₹{price}\t₹{total}\n")
+        file.write(f"\nTotal Investment: ₹{total_value}")
+    print("Saved to investment_result.txt ✅")
